@@ -1,5 +1,11 @@
+import Body from "./components/Body";
+
 function App() {
-  return <div>we are ready to build our application</div>;
+  return (
+    <div>
+      <Body />
+    </div>
+  );
 }
 
 export default App;

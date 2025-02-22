@@ -2,6 +2,8 @@
 
 - built using react + vite(bundler)
 - styled using Tailwind CSS
+- Header
+- Log In page
 
 # Features
 
