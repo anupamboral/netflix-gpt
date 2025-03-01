@@ -2,8 +2,14 @@
 
 - built using react + vite(bundler)
 - styled using Tailwind CSS
+- setting up routing
 - Header
-- Log In page
+- sign in / sign up form page
+- Form Validation
+- useRef Hook
+- Firebase Setup
+- create sign up user account
+- deploy to firebase
 
 # Features
 
