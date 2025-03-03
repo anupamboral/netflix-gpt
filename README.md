@@ -10,6 +10,10 @@
 - Firebase Setup
 - create sign up user account
 - deploy to firebase
+- Create Sign Up user account
+- Implement Sign In user Api
+- Created redux store with user Slice
+- Sign out feature
 
 # Features
 

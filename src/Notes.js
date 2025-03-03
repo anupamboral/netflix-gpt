@@ -44,3 +44,93 @@
 //* it will deploy your app - link for this project deploy - https://netflixgpt-9b986.web.app
 
 //* now the main purpose to use firebase was to do authentication for the users, so we have to come back to project overview page, in this tab click on authentication. then in the native providers tab choose the option email and password as we want use this option for authentication. and enable it
+
+//* now for this project, using email password authentication is enabled by firebase but yet we have not implemented it.
+
+//* to implement it , the best practice is to learn how to read documentation.
+//* first we will search in the google firebase documentation and then after opening its documentation their is a search bar , in that search bar we will search firebase authentication , a search suggestion will appear written   named firebase authentication we will click on that , a new page will open, in that page the side bar has many options ,under authentication section their is a sub section 'web' their we have to find password authentication,and click on it.
+//* A page will open, here we can find a heading "Create a password-based account" it is for building the sign up feature , and below that another section named "sign_in_a_user_with_an_email_address_and_password"
+//* page url -"https://firebase.google.com/docs/auth/web/password-auth"
+
+//* in both of the sections , there are two kind of apis , 1.web modular api(latest),2. web namespaced api(old way), so we are going to use the latest way.
+//* now in the example code , in the first line we import this-
+//*import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+//* getAuth is needed for authentication and createUserWithEmailAndPassword  function is for creating email and password.
+//* in the next line, the code is - const auth = getAuth();
+//* now this line , we are going to see this line many times, either for sign in , sign up , password reset , or any auth related feature. that's why we are doing to put this line in our firebase.js file. and export it from there , so we can use it whenever needed. So we don't have to call the same function again and again in many files.
+//* So let's start implementing the feature .
+//* So we will make a if block , copy the sign up code from the firebase website and paste it inside the if block like this:-
+/*if (!isSignIn) {
+      //* for Sign up logic(as email and password are reference variables (made using useref hooks) that why to pass the value we have to write email.current.value)
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value, //* as email and password are reference variables (made using useref hooks) that why to pass the value we have to write email.current.value
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          //* printing the user object to the console after he signs up
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          //* showing the error message on the ui if any error happens
+          setErrorMessage(`Error -${errorCode}: ${errorMessage}`)
+        });
+    }*/
+
+//* Now let's write the sign In logic , So we have to gp agin to same firebase page , where have sign in code example, get that code, and now below the signup block we have to write another block - a sign in block this time and put the code inside it.like this:-
+/*
+if (isSignIn) {
+      //*for Sign in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          //* printing the user object to the console after he signs up
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+           //* showing the error message on the ui if any error happens
+           setErrorMessage(`Error -${errorCode}: ${errorMessage}`);
+        });
+    }
+*/
+//* when we signin it takes an email and a password and it returns as the user, it signs in the user, what do you mean by sign in? sign in basically it sets up the cookie it basically gives us an access token so that we communicate with firebase we can authenticate it got it that is what sign in.
+
+//* Now what will happen we have to implement one more cool thing,if the user sign up or if the user sign in , we will get this user object(get as response from firebase),and I will have to keep the user object with us because I can need this user object anywhere in my app ,so what I will do is as soon as the user sign in or sign up I will just add all that data to my Redux store and we will navigate the user to my browse page ,so let's write that logic.
+
+//* part 6
+//* Now to save the user in the redux store we have to install the redux toolkit and react-redux so using this command we will install it - npm i @reduxjs/toolkit react-redux .
+//* now lets build our redux store and userSlice and provide the store to our app.
+
+//* ⁡⁣⁢⁣Adding the user data to our redux store when the user Sign In/Sign Up. and navigate the user to the browse page.⁡
+//* Now to add the user(we get from firebase after successful authentication after sign up or sign in) to the redux store, we can write dispatch actions in many places like where we sign up the user and where we sign in the user, and also when the user log out we also have to dispatch an action their to dispatch the remove user action. But why we need to write the dispatch action in so many places ? Because we have a better solution, firebase offers an api named onAuthStateChanged() . we can see inside the same web section inside authentication. Inside web we have "manage users" their it is present.
+//* onAuthStateChanged() gets called when ever the user sign in , sign up , sign out, basically whenever authentication state changes. So if we use this we don't need to dispatch the action multiple timed here and there. We can do the dispatch action inside this function.
+//* We are gonna place this api in a parent component like in the body component(or in app.jsx it doesn't matter).
+//* Let's got to the body component and use this inside a useEffect hook with an empty dependency array to call this once initially, So we get the code firebase website example. and paste it in body.like below
+/*  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      //* this block gets executed when the user signs in or sign up
+      const { uid, email, displayName } = user;
+      dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+    } else {
+      //* this else block gets executed when the user signs out
+      dispatch(removeUser());
+    }
+  });*/
+//* then we come to back to our log in component, and inside the handler function , when the user signed in and we got the user data below that we will navigate the user to the browse page. So we will use the useNavigate hook coming from react router dom. we will call this hook and save it's value to a constant named navigate. now where we got the user user below that we will call the navigate function and navigate the user to the browse page.
+//* we didn't do the navigate in the Body inside the onAuthStateChanged api because in the body file we implemented the routing So it is the routing parent elm so we can't use navigate in the parent routing element that why we are doing the navigation here in the log in component.
+
+//* Sign out
+//* On the same password authentication page in the bottom , also th code to signing out is available so built the signout feature using that.
+//* Updating the name(Display name)
+//* web => manage users page , there is a section "Update a user's profile", using it we can update the displayName when the user sign or sign up

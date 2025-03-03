@@ -1,22 +1,86 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 const LogIn = () => {
   const [togglePassword, setTogglePassword] = useState(true); //* for showing and hiding password in input box.
   const [isSignIn, setIsSignIn] = useState(true);
   //* using useRef hook for referencing email and password input elms for validation.
   const email = useRef(null);
   const password = useRef(null);
-
+  const name = useRef(null);
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null); //* for displaying the error message on the ui
 
   const handleForm = () => {
     console.log(email.current.value, password.current.value);
-    setErrorMessage(
-      checkValidData(email.current.value, password.current.value)
-    );
-    console.log(errorMessage);
+    const message = checkValidData(email.current.value, password.current.value); //* if validation fails it will return the error message but if it pass then it will return null.
+    setErrorMessage(message);
+
+    if (message) return; //*if message has truthy value that means the validation is failed so we will so early return in that case.
+
+    if (!isSignIn) {
+      //* for Sign up logic(as email and password are useref hooks that why to pass the value we have to write email.current.value)
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          //* printing the user object to the console after he signs up
+          console.log(user);
+
+          updateProfile(user, {
+            displayName: name,
+            photoURL:
+              "https://avatars.githubusercontent.com/u/112706236?s=400&u=5d8f5120dfb825c070e34bbb3195186293ec3560&v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              navigate("/browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              console.error(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          //* showing the error message on the ui if any error happens
+          setErrorMessage(`Error -${errorCode}: ${errorMessage}`);
+        });
+    }
+    if (isSignIn) {
+      //*for Sign in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          //* printing the user object to the console after he signs up
+          console.log(user);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          //* showing the error message on the ui if any error happens
+          setErrorMessage(`Error -${errorCode}: ${errorMessage}`);
+        });
+    }
+    // console.log(errorMessage);
   };
   return (
     <div className="text-xl relative flex ">
@@ -39,6 +103,7 @@ const LogIn = () => {
 
           {!isSignIn && (
             <input
+              ref={name}
               className="bg-black text-amber-50 text-sm p-2 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
               type="text"
               placeholder="Full Name"
