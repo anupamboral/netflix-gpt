@@ -116,7 +116,7 @@ if (isSignIn) {
 //* Now to add the user(we get from firebase after successful authentication after sign up or sign in) to the redux store, we can write dispatch actions in many places like where we sign up the user and where we sign in the user, and also when the user log out we also have to dispatch an action their to dispatch the remove user action. But why we need to write the dispatch action in so many places ? Because we have a better solution, firebase offers an api named onAuthStateChanged() . we can see inside the same web section inside authentication. Inside web we have "manage users" their it is present.
 //* onAuthStateChanged() gets called when ever the user sign in , sign up , sign out, basically whenever authentication state changes. So if we use this we don't need to dispatch the action multiple timed here and there. We can do the dispatch action inside this function.
 //* We are gonna place this api in a parent component like in the body component(or in app.jsx it doesn't matter).
-//* Let's got to the body component and use this inside a useEffect hook with an empty dependency array to call this once initially, So we get the code firebase website example. and paste it in body.like below
+//* Let's got to the body component and use this inside a useEffect hook with an empty dependency array to call this once initially because this api is like an event listener so we just need to attach this with our app just once, So we get the code firebase website example. and paste it in body.like below
 /*  onAuthStateChanged(auth, (user) => {
     if (user) {
       //* this block gets executed when the user signs in or sign up
@@ -134,3 +134,8 @@ if (isSignIn) {
 //* On the same password authentication page in the bottom , also th code to signing out is available so built the signout feature using that.
 //* Updating the name(Display name)
 //* web => manage users page , there is a section "Update a user's profile", using it we can update the displayName when the user sign or sign up
+
+//* one more important thing is we also have to update the store after we update the displayName inside our login component, and remember we have get the updated the user so we can get that from auth.currentUser after updating the user.
+//* And also dispatch a removeUser action when user signs out to empty the store.
+
+//* Episode 2

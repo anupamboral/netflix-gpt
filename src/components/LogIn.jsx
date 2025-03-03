@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 const LogIn = () => {
   const [togglePassword, setTogglePassword] = useState(true); //* for showing and hiding password in input box.
   const [isSignIn, setIsSignIn] = useState(true);
@@ -17,7 +19,7 @@ const LogIn = () => {
   const name = useRef(null);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null); //* for displaying the error message on the ui
-
+  const dispatch = useDispatch();
   const handleForm = () => {
     console.log(email.current.value, password.current.value);
     const message = checkValidData(email.current.value, password.current.value); //* if validation fails it will return the error message but if it pass then it will return null.
@@ -38,13 +40,23 @@ const LogIn = () => {
           //* printing the user object to the console after he signs up
           console.log(user);
 
-          updateProfile(user, {
-            displayName: name,
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value,
             photoURL:
               "https://avatars.githubusercontent.com/u/112706236?s=400&u=5d8f5120dfb825c070e34bbb3195186293ec3560&v=4",
           })
             .then(() => {
               // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser; //* auth.currentUser is providing us the updated user after updating the name and photo.
+              //*updating the store
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
               navigate("/browse");
             })
             .catch((error) => {
@@ -83,41 +95,41 @@ const LogIn = () => {
     // console.log(errorMessage);
   };
   return (
-    <div className="text-xl relative flex ">
+    <div className="text-xl  flex ">
       <Header />
       <div>
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/0cf2c109-3af1-4a9d-87d7-aecfac5fe881/web/IN-en-20250217-TRIFECTA-perspective_c3376e06-9aff-4657-aafb-91256a597b7c_large.jpg"
           alt="background-image"
-          className=" h-lvh lg:h-[150dvh] w-full"
+          className=" h-lvh lg:h-[150dvh] w-screen"
         />
       </div>
       <div>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col p-12 lg:w-[400px]  w-80 h-[400px]  lg:h-[600px] mb-0   absolute  lg:left-[400px] left-10  md:left-1/3 top-24     bg-black opacity-80"
+          className="flex flex-col p-12 lg:w-[500px]  w-80 h-[400px]  lg:h-[600px] mb-0   absolute  lg:left-[500px] left-10  md:left-1/3 top-24     bg-black opacity-80"
         >
-          <h1 className="text-white text-3xl font-bold mb-2 ml-2">
+          <h1 className="text-white text-4xl font-bold mb-2 ml-2">
             {isSignIn ? "Sign In" : "Sign up"}
           </h1>
 
           {!isSignIn && (
             <input
               ref={name}
-              className="bg-black text-amber-50 text-sm p-2 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
+              className="bg-black text-amber-50 text-sm p-4 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
               type="text"
               placeholder="Full Name"
             />
           )}
           <input
             ref={email}
-            className="bg-black text-amber-50 text-sm p-2 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
+            className="bg-black text-amber-50 text-lg p-4 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
             type="email"
             placeholder="Email address"
           />
           <input
             ref={password}
-            className="bg-black text-amber-50 p-2 text-sm m-2  border-2 rounded-md  hover:border-b-cyan-400 "
+            className="bg-black text-amber-50 p-4 text-lg m-2  border-2 rounded-md  hover:border-b-cyan-400 "
             type={togglePassword ? "password" : "text"}
             placeholder="password"
           />
@@ -125,7 +137,7 @@ const LogIn = () => {
             <input
               onClick={() => setTogglePassword(!togglePassword)}
               type="checkbox"
-              className="mr-2 ml-2"
+              className="mr-2 w-5 h-5 ml-2"
             />
             Show Password
           </label>
@@ -137,7 +149,7 @@ const LogIn = () => {
           <button
             onClick={handleForm}
             type="submit"
-            className="bg-red-600 text-white p-1 text-sm m-2 mt-4 rounded-sm"
+            className="bg-red-600 text-white p-3 text-sm m-2 mt-4 rounded-sm"
           >
             {isSignIn ? "Sign In" : "Sign up"}
           </button>
