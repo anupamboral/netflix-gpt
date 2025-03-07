@@ -7,7 +7,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 const LogIn = () => {
@@ -17,7 +17,7 @@ const LogIn = () => {
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
-  const navigate = useNavigate();
+
   const [errorMessage, setErrorMessage] = useState(null); //* for displaying the error message on the ui
   const dispatch = useDispatch();
   const handleForm = () => {
@@ -57,7 +57,6 @@ const LogIn = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -83,7 +82,6 @@ const LogIn = () => {
           const user = userCredential.user;
           //* printing the user object to the console after he signs up
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;

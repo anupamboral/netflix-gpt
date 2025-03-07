@@ -1,21 +1,44 @@
-import { signOut } from "firebase/auth";
-import { useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
   const [showSignOut, setshowSignOut] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //* onAuthStateChanged() gets called when ever the user sign in , sign up , sign out, basically whenever authentication state changes. So if we use this we don't need to dispatch the action multiple timed here and there. We can do the dispatch action to add or remove the user to redux store inside this function.
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //* this block gets executed when the user signs in or sign up
+        console.log("auth change");
+        console.log(user);
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse"); //* do confirm validation first then only redirecting to /browse page.
+      } else {
+        //* this else block gets executed when the user signs out
+        dispatch(removeUser());
+      }
+    });
+  }, []);
 
   const user = useSelector((store) => store.user);
+  //* to sign out when user click on sign out button.
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-
-        navigate("/");
       })
       .catch((error) => {
         // An error happened
