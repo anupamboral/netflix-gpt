@@ -16,8 +16,8 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         //* this block gets executed when the user signs in or sign up
-        console.log("auth change");
-        console.log(user);
+        // console.log("auth change");
+        // console.log(user);
         const { uid, email, displayName, photoURL } = user;
         dispatch(
           addUser({

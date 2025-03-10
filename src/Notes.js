@@ -138,7 +138,7 @@ if (isSignIn) {
 //* one more important thing is we also have to update the store after we update the displayName inside our login component, and remember we have get the updated the user so we can get that from auth.currentUser after updating the user.
 //* And also dispatch a removeUser action when user signs out to empty the store.
 
-//* Episode 2
+//* Episode 2 (Lesson 15 . netflix gpt - building the core)
 //*  we still have some bugs so lets fix them and build other features
 //*  now I am on the my login page but what if if I am trying to access my "/browse" page I can still access,but I should not be able to access my browse page. if I am not logged in, so basically this is like giving the private information to a lot of the user , kind of like the user is not logged in and he can still access the browse page,so how I can restrict this route? so this is an important and there is one more thing
 // *  suppose in the user is signed in,  and if I try to go to my login page by changing the path in the url like "/login" it should redirect me to the browse page, in netflix if you go to Netflix.com does the same
@@ -161,3 +161,16 @@ if (isSignIn) {
   */
 
 //* and finally we also made a constants file where we kept all the hard written strings like the logo and log in page background image and exported them to use anywhere in our project.
+
+//* so start building the browse page
+//* First of all we have vto figure out from where we will get the movie data which we are gonna display in our project.
+//* Source - tmdb (the movie database) (search it on google)
+//* This is a very tmdb right this is the database which has all the latest upcoming new, now playing, popular trending all the movies and we can use their apis  to fetch all these details , so what we will have to do is to go to tmdb(search on google) , you will have to  your edit profile once you go to this edit profile you have to go to api option  in the left hand side, you have click on api, and find your api key and and api access token , after clicking on api it will ask you to "generate nee api key" , click on that,then it will ask "What type of API key do you wish to register?" we have to select as a "Developer"  , then we have to accept the term and conditions, then we have to register our app (where we will use this api) , fill the details and and then we will get the api key and api access token .
+//* react strict mode - when we created our react app using vite template, then in the main.jsx file it wraps our app component inside react strict mode component , and because of this react strict mode , in development mode StrictMode renders components twice (on dev mode but not production) in order to detect any problems with your code and warn you about them (which can be quite useful).it is doing the extra rendering to check any inconsistency between our calls(api call or any function calls).it will through an error if their is an in consistency in your code.it will not happen in the production build.
+//* so as we got the our api access token , now in this same page they mentioned the link of the api documentation page, we have to click on that , this is link link of their documentation page - "https://developer.themoviedb.org/docs/getting-started"
+//* in this documentation page in the header menu , their is a option named "API Reference", click on that. and we will get all types of ap[is tmdb offers.in the left nav bar their are all types of options so we have to scroll down and find "movie lists" as we are now only interested about movies. in the movies list category , the first option is "Now Playing" ,using this api we can  get a list of movies that are currently in theatres. and they also mentioned that this is a get api. so we can only send the get request.
+//* In the right side panel we have to choose the javascript language. and iot will give us written code template of this api. using it we acn make the api call.
+//* in the template we can see that, in the fetch function , we have to also pass the options as the second parameter, this options object contain all information about method,headers(contains our api token). So without this our api call will through an error. So first of all we will copy this options and paste it in our constants file , with the name "API_OPTIONS", and export it.
+
+//* now inside the browse component , first we will create getNowPlayingMovies named async function to fetch movies , now inside this function using the fetch function we will call the api, and also passing the options we saved in the constants file. and console.log the result. now our function is ready.
+//* now e will call this getNowPlayingMovies() function inside the useEffect hook, and in the useEffect hook we have to mention the empty dependency array , to call this useEffect only once in the initial render. and now in the browser console we can see the results we got . we got 20 movies data to display.
