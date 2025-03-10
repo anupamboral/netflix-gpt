@@ -4,6 +4,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO, USER_AVATAR } from "../utils/constants";
 
 const Header = () => {
   const [showSignOut, setshowSignOut] = useState(false);
@@ -11,7 +12,8 @@ const Header = () => {
   const dispatch = useDispatch();
   //* onAuthStateChanged() gets called when ever the user sign in , sign up , sign out, basically whenever authentication state changes. So if we use this we don't need to dispatch the action multiple timed here and there. We can do the dispatch action to add or remove the user to redux store inside this function.
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    //*for clean up of this onAuthStateChange event listener it returns a unsubscribe function , so we can use it to cleanup this effect when our component unmounts.
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         //* this block gets executed when the user signs in or sign up
         console.log("auth change");
@@ -29,8 +31,12 @@ const Header = () => {
       } else {
         //* this else block gets executed when the user signs out
         dispatch(removeUser());
+        navigate("/"); //*if the user is not signed in and he manually tries to access the browse page he will be automatically directed to the log in page
       }
     });
+
+    //* for cleanup
+    return () => unsubscribe();
   }, []);
 
   const user = useSelector((store) => store.user);
@@ -47,15 +53,12 @@ const Header = () => {
   };
   return (
     <div className="fixed p-2 z-10 top-0    bg-gradient-to-b from-black flex justify-between w-[99dvw] overflow-x-hidden">
-      <img
-        className="w-34 h-20"
-        src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-      />
+      <img className="w-34 h-20" src={LOGO} />
       {user && (
         <div className="nav p-2  mr-8">
           <div className="flex">
             <img
-              src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg"
+              src={USER_AVATAR}
               alt="user-icon"
               className="w-16 h-10 mr-1 "
               onClick={() => setshowSignOut(!showSignOut)}

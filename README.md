@@ -14,6 +14,9 @@
 - Implement Sign In user Api
 - Created redux store with user Slice
 - Sign out feature
+- bug fix - sign up user displayName and profile picture update
+- bug fix - if the user is not logged in redirect /browse to log in page and vice-versa
+- unsubscribe to onAuthStateChange callback for cleanup
 
 # Features
 

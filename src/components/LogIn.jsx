@@ -10,6 +10,7 @@ import { auth } from "../utils/firebase";
 
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { LOG_IN_PAGE_BACKGROUND_IMAGE } from "../utils/constants";
 const LogIn = () => {
   const [togglePassword, setTogglePassword] = useState(true); //* for showing and hiding password in input box.
   const [isSignIn, setIsSignIn] = useState(true);
@@ -97,9 +98,9 @@ const LogIn = () => {
       <Header />
       <div>
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/0cf2c109-3af1-4a9d-87d7-aecfac5fe881/web/IN-en-20250217-TRIFECTA-perspective_c3376e06-9aff-4657-aafb-91256a597b7c_large.jpg"
+          src={LOG_IN_PAGE_BACKGROUND_IMAGE}
           alt="background-image"
-          className=" h-lvh lg:h-[150dvh] w-screen"
+          className=" h-[150dvh] w-screen"
         />
       </div>
       <div>
