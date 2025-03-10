@@ -174,3 +174,24 @@ if (isSignIn) {
 
 //* now inside the browse component , first we will create getNowPlayingMovies named async function to fetch movies , now inside this function using the fetch function we will call the api, and also passing the options we saved in the constants file. and console.log the result. now our function is ready.
 //* now e will call this getNowPlayingMovies() function inside the useEffect hook, and in the useEffect hook we have to mention the empty dependency array , to call this useEffect only once in the initial render. and now in the browser console we can see the results we got . we got 20 movies data to display.
+
+//* now as we got the movie data from the api , now let's create movie slice to keep our data in the redux store, so we have created the movieSlice and inside it create an action named addNowPlayingMovies which will add the response of the api into the store.
+//* now from the browse page we will dispatch the action to add the data into the store, and we have already added the slice into appStore.
+
+//* right now , in the browse component we have written the logic of fetching the data and storing it in our store. but because of this our browse component is looking messing . So let's create a custom hook and put this logic there, then we will just import the hook and call it so just by writing one function call our work will be done.
+
+//* part 15 - building the browse page
+//*  In my Netflix website , we have this title container below the header and we have this background video and we have all these movies so let us just start building it , but first of all let us just plan how do we build it because once we plan this properly then writing code is very easy .
+//* how will I make the ui?  this ui looks very complicated , lets try to make it as close as Netflix,so lets try to structure our app in a proper way
+/*
+- Header
+- MainContainer
+  - VideoBackground
+  - VideoTitle
+- SecondaryContainer
+  - MovieList * n
+  - cards * n
+
+*/
+// * basically what am I trying to say is if you want to structure your app how we can structure,basically I can divide my whole app right my whole browse page into two sections , so the first section is the mainContainer section ,so basically its like a main video container ,and it has video background  and it also has one more thing it has a video title and  there is one more secondary container , this secondary container has multiple movie lists and each of this movie list again has multiple movie cards , if you will make the ui you know first the ui is made inside head and then it is made inside the code , so never try to randomly start making ui ,otherwise you will have to keep refactoring your code, spend time in planning , so when I have planned this up now writing code will become very easy because now exactly I know I have to create main container then I will create my secondary container.
+// 1.07.30

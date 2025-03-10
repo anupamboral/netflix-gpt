@@ -18,6 +18,8 @@
 - bug fix - if the user is not logged in redirect /browse to log in page and vice-versa
 - unsubscribe to onAuthStateChange callback for cleanup
 - add hard codded values to the constants files
+- register our app on tmdb and get the access token
+- get data from tmdb now playing list api
 
 # Features
 
