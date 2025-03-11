@@ -194,4 +194,11 @@ if (isSignIn) {
 
 */
 // * basically what am I trying to say is if you want to structure your app how we can structure,basically I can divide my whole app right my whole browse page into two sections , so the first section is the mainContainer section ,so basically its like a main video container ,and it has video background  and it also has one more thing it has a video title and  there is one more secondary container , this secondary container has multiple movie lists and each of this movie list again has multiple movie cards , if you will make the ui you know first the ui is made inside head and then it is made inside the code , so never try to randomly start making ui ,otherwise you will have to keep refactoring your code, spend time in planning , so when I have planned this up now writing code will become very easy because now exactly I know I have to create main container then I will create my secondary container.
-// 1.07.30
+
+// * now as oue plan is ready , let's start to build the browse page.
+//* as per the planning , in side the the browse page mainly we have two containers - 1.MainContainer and 2.SecondaryContainer. first lets created this components and export them then composition these inside browse page.
+//* now inside the MainContainer we have decided two components,1.VideoBackground 2. VideoTitle. Here VideoTitle will overlay on the VideoBackground. let's a;so build these components and composition inside the mainContainer.
+//* Now in the MainContainer we will subscribe to our movieSlice and get the data. now in the console first we will see null then see the results. the null is present because when the data is not even present in the store react trying to get it at that time so that's why we are seeing null. So we are gonna write a early return to solve this so the code execution only carries on when we have already have the data in the store.
+//* now our problem is solved , let's extract the movie "poster_path" and "overView" from the first movie data because we want to display just just one movies data in the videoTitle component and then we will pass that data inside the VideoTitle component as prop. and then we will receive the props in the component and using the data we will build it.
+
+//* part-16 building the video background
