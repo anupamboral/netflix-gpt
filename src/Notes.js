@@ -202,3 +202,106 @@ if (isSignIn) {
 //* now our problem is solved , let's extract the movie "poster_path" and "overView" from the first movie data because we want to display just just one movies data in the videoTitle component and then we will pass that data inside the VideoTitle component as prop. and then we will receive the props in the component and using the data we will build it.
 
 //* part-16 building the video background
+//* in the movie data we fetched, we don't have any trailer video information
+//*  if you will go to tmdb api documentation in the api reference page and if I see the apis so in the left navbar inside movies category , we have a api which is known as "videos"  and this api  basically give you the videos of a particular movie, so it takes a movie id(we already have the movie id in the fetched movie data from now playing movies),  and it gives me the videos associated with this movie id we provide while making the call to this api, suppose if we have a movie and I give a movie id it will give me all the videos it has for a particular movie , video related to that movie, so let us use this api  and give it a movie id , so let us try this api first of all, this tmdb documentation is very nice , it gives you a playground where you can test , where you can test the apis, so what I can do is I can enter a movie id(we got from now playing movies api) and I can make a call directly from here,  so if I have my movie id , let's copy a movie id from our console and let's go to tmdb video api page, if I write movie id here,and I will click on try it, if I click on try it, it will make an api call and let's see the response I get.below we have the response copy we got from the site
+/*
+{
+  "id": 1126166,
+  "results": [
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Mel Gibson’s ‘Hit Your Mark’",
+      "key": "XIHXt9Dms5U",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Teaser",
+      "official": true,
+      "published_at": "2025-01-21T18:32:59.000Z",
+      "id": "6790683b297a5d91d07745a6"
+    },
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Mel Gibson’s ‘More is More’",
+      "key": "1n5se-qHN7Q",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Teaser",
+      "official": true,
+      "published_at": "2025-01-10T15:22:09.000Z",
+      "id": "67849c13ababbba040bb6e83"
+    },
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Mel Gibson’s ‘More is More’",
+      "key": "-rca0ucR16E",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Teaser",
+      "official": true,
+      "published_at": "2025-01-08T19:00:09.000Z",
+      "id": "677f21b589fc5d94424e8785"
+    },
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Official Trailer #2",
+      "key": "Cml3CFDBj2s",
+      "site": "YouTube",
+      "size": 2160,
+      "type": "Trailer",
+      "official": true,
+      "published_at": "2025-01-01T17:00:02.000Z",
+      "id": "67757b4b7d1bc87de761d858"
+    },
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Official Trailer",
+      "key": "ojC9JBuccJA",
+      "site": "YouTube",
+      "size": 2160,
+      "type": "Trailer",
+      "official": true,
+      "published_at": "2024-06-27T14:59:59.000Z",
+      "id": "667d837e16f633cc52195216"
+    }
+  ]
+}
+*/
+//* this is the response and so this response basically contains multiple videos associated with that movie , it will contain songs of that movie, short clicks of that movie, teaser of that movie, trailer of that movie,  so basically there are many videos associated to this movie "flight risk"  so in this "flight risk" movie there are multiple videos associated to it, but we are only concerned about a movie trailer , so if you will see there is an option of type:clip,type:featured, type:teaser ,there is a type:trailer, we are concerned about this trailer piece of information , basically we will make a call to videos api from our videoBackground component, we will give it a movie id and it will give me all the videos and then I am just concerned about the trailer , and this is basically this gives us information about the trailer, it says that  the trailer is available on youtube and it also gives you a key(this key is basically the youtube video id),  right this key is basically the youtube key for the trailer video and this will help us fetch the trailer fetch the video from youtube,so we will be using this,let us start using it, we have to make the api call to get this video background.
+//*for this we will need movie id in our videoBackground component, to fetch the videos, I will basically fetch my trailer here inside the videoBackground component and to fetch my trailer video, I will have to make an api call,and to make that api call I will need movie id, so basically I would need movie id in the videoBackground ,so where will I get my movie id? from the mainContainer component, I can pass in movie id from mainContainer component as a prop to this videoBackground component, so let us pass in movie id and the movie id is already there inside my mainMovie constant inside my mainContainer component,  so I can just extract my id from here
+//*⁡⁣⁢⁣ new bug eslint error: movieId' is missing in props validation⁡
+//* now in the when we are trying to get movieId inside our videBackground component from props using destructuring, it was show an error "movieId' is missing in props validation".
+//* this error is coming from eslint.
+//* what is eslint?The pluggable linting utility for JavaScript and JSX.ESLint is an open source project that helps you find and fix problems with your JavaScript code. It doesn't matter if you're writing JavaScript in the browser or on the server, with or without a framework, ESLint can help your code live its best life.
+//* vite react template by default comes with eslint.
+//* in this problem it was asking from prop validation, which is not necessary for us, so there are two solutions for this 1. is we can add this line "// eslint-disable-next-line react/prop-types" before the line we are destructuring the prop, we already did it in our videoTitle component, it basically disables this eslint react/prop-types validation for the next line. or even we can remove the "-next-line" word and put is on the top of the ile file , it will disable eslint prop validation for the whole component file,but again in another component if we try to destructure any other prop then again we have to put this line.
+//* 2 solution is go to eslint.config.js file and inside the rules we can disable it like
+/*"rules": {
+  "react/prop-types": "off"
+}*/
+//* now in the whole project this eslint react/prop-types validation will be disabled. it is a better solution rather than doing it on every file we are using prop.
+
+//* now I will make an api call from videBackground component, let's make our async function getMovieVideos(), let's make an api call inside this function to that api and get the videos associated with that particular movie , and remember we have to pass the options (we already saved option inside constants file),see the use of constant is that, the options are present in one place and wherever I would need these api options we can import it from there, I am not writing this whole options object again and again,and this is the best practice , what a lot of people will do a lot of people just write the option every where they are fetching data and this will work for sure, but what will happen is suppose if your token changed then you will have to make changes like 10 places you will have to make changes in everywhere you used the options, but if we will import it from your constants, so we will just have to make it so suppose if a token change so I just have to make one change inside constants and all the places will be updated  so that is why we will use this api options from the constants right so let us import our api_options from constants.
+
+//* I will get the data in Json.results  let me just console log and see if I have got this video trailer or not right so basically I am just concerned about this video trailer , I will call this getMovieVideos inside my use effect with empty dependency array to call it once in the initial render,I have got 31 video results and but I am just concerned about my trailer from this list of 31 ,I just want trailer how will I find my trailer inside them,and how do I find my trailer? I will filter my results basically this json.results I will cheque I will cheque if the video.name==="Official Trailer"
+//*I have got my trailer over here right that is the first video inside my philtre data but what if that there is no video with the word official trailer inside it , so it can happen, so  our movie is maybe upcoming movie or maybe tmdv does not have that trailer or suppose if there were 31 videos and out of those 31 videos it does not have any trailer, so if that trailer is not there we should handle that case also ,how do you handle that case if my philtre data length  length is equal to 0 , then using ternary operator we will set the first video of our movieVideos as the movieTrailer.like -
+//  const movieTrailer =filteredVideos.length > 0 ? filteredVideos[0] : movieVideos[0];
+
+//*  so we are handling all the cases,now we have got this trailer with us ,we have got this trailer with us now we can we can just render this trailer into our component right we can just render this trailer into our component this trailer basically contains the youtube video key ,so this key is basically the youtube id you know every youtube video has a id let me go to youtube.com if I go to youtube.com so if you will open any video ,the video has a id we can see that in the url, this key which we are receiving is basically the same key/id ,we can just get this youtube video onto our page got it with this key, we are going to basically take this youtube video and put it onto our page, how do I do that so basically what will do click on this share button and find the embed code , with every youtube video if you click on the share button click on this embed  code  and you will get this iframe code over here so copy this code and this is the embed code and you will have to put this embed code into your videoBackground component
+//* the iframe tag has some attribute like frameborder but in jsx basically they use the convention of using camel casing  so if you will write frameBorder like this it will not it will throw away like it wont throw an error now right it won't throw an error
+//*right and similarly in allowfullscreen also if you will write allowFullScreen ,it will not throw an error, why it was giving error? so basically the code that we copied youtube that embed code is not a react code ,it was a html code so that is why we are just altering it for using in jsx
+//* but let me tell you I do not need this allow full screen right I dont need anyways this allow full screen you can delete it
+
+//*but  I do not need this allow full screen attributes we can delete width and height also, because we have to make this full screen and we have to put it behind , we have successfully got the video embedded from the youtube into our app , so now let us make this dynamic , how will you make this id dynamic? this trailer.key .but we have to save this trailer data someWhere after we get it from api . So first option is to make a state variable and save it inside the state variable, and second option is to save it into our redux store, so we can make another slice but that is not necessary, so we can use the movieSlice we created , so we have to go to our movieSlice, in the initial state we will add a property named movieTrailer and set its initial value to null then we will create an action addMovieTrailers and this will set state.movieTrailer = action.payload;   this videoBackground component will not have to manage its own state it will basically connect to the store and will fetch the trailer from there
+
+// * Let's dispatch an action and what will be my action addVideoTrailer I will just pass in json.results.
+//* Right now  I can get this dynamic id from store, how will I fetch from my store?  we will do a useSelector((store) => store.movie?.movieTrailer) .
+//* So there are two ways either you can handle everything from your component state or you can handle it from your store so I am just putting everything in Redux store.
+//* overlap on the background video component
+//* to make the videoTile component on the videoBackground component, first we have videoTile component absolute, and to make the video full screen on the iframe tag we will add class w-[99dvw] to set the width to 99% of device viewport width. and to maintain the width- height ratio(aspect ratio) , we will add another classname "aspect-ratio" to the iframe tag because it sets the aspect ration to 16:9 which is ideal for all videos, and now we will also add this classnames to our videoTitle component, to match both component sizes, because then only the video can't be play paused because it will hover on top of the video, and also to make the videTitle more visible we will give the videTitle component a gradient background from left to right using the classes "bg-gradient-to-r from-black to-50%".
+//* ⁡⁣⁢⁣autoplay the video
+//* to autoplay the video after the video id we have to add the this:- "?autoplay=1&mute=1" inside the iframe tag.

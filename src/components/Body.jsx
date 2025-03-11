@@ -16,7 +16,7 @@ const appRouter = createBrowserRouter([
 const Body = () => {
   //* onAuthStateChange() is moved to the header because we needed to use the navigate function inside it which could be only possible if we would place it inside the header component
   return (
-    <div>
+    <div className="relative">
       <RouterProvider router={appRouter} />
     </div>
   );

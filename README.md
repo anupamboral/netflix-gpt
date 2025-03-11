@@ -20,6 +20,14 @@
 - add hard codded values to the constants files
 - register our app on tmdb and get the access token
 - get data from tmdb now playing list api
+- custom hook for nowPlayingMovie
+- create movieSlice
+- Update store with movie data
+- Planning for MainContainer and secondaryContainer
+- Fetch data for tailer video
+- update store with trailer videos data
+- Embedded the youtube video and make it autoPlay and mute
+- Tailwind classes to beautify the main container
 
 # Features
 
