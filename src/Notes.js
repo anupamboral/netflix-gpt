@@ -304,4 +304,22 @@ if (isSignIn) {
 //* overlap on the background video component
 //* to make the videoTile component on the videoBackground component, first we have videoTile component absolute, and to make the video full screen on the iframe tag we will add class w-[99dvw] to set the width to 99% of device viewport width. and to maintain the width- height ratio(aspect ratio) , we will add another classname "aspect-ratio" to the iframe tag because it sets the aspect ration to 16:9 which is ideal for all videos, and now we will also add this classnames to our videoTitle component, to match both component sizes, because then only the video can't be play paused because it will hover on top of the video, and also to make the videTitle more visible we will give the videTitle component a gradient background from left to right using the classes "bg-gradient-to-r from-black to-50%".
 //* ⁡⁣⁢⁣autoplay the video
-//* to autoplay the video after the video id we have to add the this:- "?autoplay=1&mute=1" inside the iframe tag.
+//* to autoplay the video inside the url, after the video id we have to add the this:- "?autoplay=1&mute=1" inside the iframe tag.
+//* loop/replay video automatically
+//* to loop the video automatically after the "?autoplay=1&mute=1" string we also have to add this - "&loop=1&playlist=" +movieTrailer?.key"
+
+//* Building the secondary component
+/* ⁡⁣⁢⁣Planning
+- Secondary Container
+  - movie lists
+    - Now Playing movies(heading)
+    - movie Cards(n)
+  - movie lists
+    - Upcoming movies
+    - movie Cards(n)    
+  - movie lists
+    - Popular movies
+    - movie Cards(n)⁡
+*/
+//*3.28
+//* so according to the plan we have built the secondary container, and we also buil some custom hooks:-  usePopularMovies();  useTopRatedMovies(),useUpcomingMovies(); to fetch popular, top rated , upcoming movies and we save that data the store and from the store using useSelector we got the data then, passed into movie list components as prop, then from movie list component we passed the data to movieCard component as prop. we also used negative margin to uplift the movie lists component.

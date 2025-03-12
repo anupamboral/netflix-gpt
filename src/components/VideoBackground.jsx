@@ -15,7 +15,7 @@ const VideoBackground = ({ movieId }) => {
       API_OPTIONS
     );
     const json = await data.json();
-    // console.log(json);
+    console.log(json);
     dispatch(addMovieTrailers(json.results));
   };
   useEffect(() => {
@@ -36,11 +36,12 @@ const VideoBackground = ({ movieId }) => {
   return (
     <div>
       <iframe
-        className="w-[99dvw] aspect-video min-h-[35rem]"
+        className="w-[99dvw] aspect-video min-h-[30rem] lg:mt-[-95px] mt-[-25px] "
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
-          "?autoplay=1&mute=1"
+          "?autoplay=1&mute=1&loop=1&playlist=" +
+          movieTrailer?.key
         }
         title="YouTube video player"
       ></iframe>

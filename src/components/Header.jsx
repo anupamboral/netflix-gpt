@@ -55,7 +55,7 @@ const Header = () => {
     <div className="fixed p-2 z-10 top-0    bg-gradient-to-b from-black flex justify-between w-[99dvw] overflow-x-hidden">
       <img className="w-34 h-20" src={LOGO} />
       {user && (
-        <div className="nav p-2  mr-8">
+        <div className="nav p-2 pr-0  lg:mr-8 mr-2">
           <div className="flex">
             <img
               src={USER_AVATAR}
