@@ -4,7 +4,7 @@ import { IMG_CDN_URL } from "../utils/constants";
 const VideoTitle = ({ moviePoster, movieDetails }) => {
   // console.log(moviePoster, movieDetails);
   return (
-    <div className="pt-20 lg:pt-20 lg:pl-24 pl-6 absolute text-white w-[100dvw] min-h-[30rem] aspect-video bg-gradient-to-r from-black to-50%">
+    <div className="pt-20 lg:pt-20 lg:pl-24 pl-6 absolute text-white  lg:w-[99dvw] w-[100dvw] min-h-[30rem] aspect-video bg-gradient-to-r from-black to-50%">
       <img
         src={IMG_CDN_URL + moviePoster}
         alt=""
@@ -16,7 +16,7 @@ const VideoTitle = ({ moviePoster, movieDetails }) => {
       <div className="flex gap-4">
         <button
           type="button"
-          className="lg:w-32 w-24 h-10 p-5 lg:px-20 px-14 flex items-center justify-center text-white bg-black font-bold text-xl rounded-lg mt-4 hover:opacity-80 hover:shadow-cyan-500 hover:shadow-xl selection:text-cyan-500 border-1 border-cyan-500"
+          className="lg:w-32 w-24 h-10 p-5 lg:px-20 px-14 flex items-center justify-center text-white bg-black font-bold text-xl rounded-lg mt-4 hover:opacity-80 hover:shadow-cyan-500 hover:shadow-xl selection:text-cyan-500 border-1 border-cyan-500 "
         >
           <span className="mr-2">▷</span>Play
         </button>

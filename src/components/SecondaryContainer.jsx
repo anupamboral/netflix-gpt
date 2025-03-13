@@ -16,7 +16,7 @@ const SecondaryContainer = () => {
   if (!movies.nowPlayingMovies) return;
   console.log(movies);
   return (
-    <div className="text-white bg-black pb-10">
+    <div className=" bg-black pb-10">
       <div className="relative lg:-mt-38 -mt-12 lg:bg-transparent bg-black">
         {movies.nowPlayingMovies && (
           <MoviesList title={"Now Playing"} movies={movies?.nowPlayingMovies} />
@@ -25,10 +25,7 @@ const SecondaryContainer = () => {
           <MoviesList title={"Popular"} movies={movies?.popularMovies} />
         )}
         {movies?.topRatedMovies && (
-          <MoviesList
-            title={"Top Rated Movie"}
-            movies={movies?.topRatedMovies}
-          />
+          <MoviesList title={"Top Rated"} movies={movies?.topRatedMovies} />
         )}
         {movies.upcomingMovies && (
           <MoviesList title={"Upcoming"} movies={movies?.upcomingMovies} />
