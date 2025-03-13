@@ -29,14 +29,15 @@ const VideoBackground = ({ movieId }) => {
     (video) => video.name === "Official Trailer"
   );
 
+  //* if filtered video contains 1 or more than ` videos then we will display the first video from the filtered videos otherwise we will just display from whatever video available in the movieVideos.
   const movieTrailer =
-    filteredVideos.length > 0 ? filteredVideos[0] : movieVideos[0];
+    filteredVideos.length >= 1 ? filteredVideos[0] : movieVideos[0];
   // console.log(movieTrailer);
 
   return (
     <div>
       <iframe
-        className="w-[99dvw] aspect-video min-h-[30rem] lg:mt-[-80px] mt-[-25px] "
+        className="w-[100dvw] aspect-video min-h-[30rem] lg:mt-[-80px] mt-[-25px] "
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
