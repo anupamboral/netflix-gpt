@@ -17,11 +17,22 @@ const SecondaryContainer = () => {
   console.log(movies);
   return (
     <div className="text-white bg-black pb-10">
-      <div className="relative lg:-mt-52 -mt-12 lg:bg-transparent bg-black">
-        <MoviesList title={"Now Playing"} movies={movies?.nowPlayingMovies} />
-        <MoviesList title={"Popular"} movies={movies?.popularMovies} />
-        <MoviesList title={"Top Rated Movie"} movies={movies?.topRatedMovies} />
-        <MoviesList title={"Upcoming"} movies={movies?.upcomingMovies} />
+      <div className="relative lg:-mt-38 -mt-12 lg:bg-transparent bg-black">
+        {movies.nowPlayingMovies && (
+          <MoviesList title={"Now Playing"} movies={movies?.nowPlayingMovies} />
+        )}
+        {movies?.popularMovies && (
+          <MoviesList title={"Popular"} movies={movies?.popularMovies} />
+        )}
+        {movies?.topRatedMovies && (
+          <MoviesList
+            title={"Top Rated Movie"}
+            movies={movies?.topRatedMovies}
+          />
+        )}
+        {movies.upcomingMovies && (
+          <MoviesList title={"Upcoming"} movies={movies?.upcomingMovies} />
+        )}
       </div>
     </div>
   );

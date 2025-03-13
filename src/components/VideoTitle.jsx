@@ -4,7 +4,7 @@ import { IMG_CDN_URL } from "../utils/constants";
 const VideoTitle = ({ moviePoster, movieDetails }) => {
   // console.log(moviePoster, movieDetails);
   return (
-    <div className="pt-20 lg:pt-40 lg:pl-24 pl-6 absolute text-white w-[99dvw] min-h-[30rem] aspect-video bg-gradient-to-r from-black to-50%">
+    <div className="pt-20 lg:pt-20 lg:pl-24 pl-6 absolute text-white w-[99dvw] min-h-[30rem] aspect-video bg-gradient-to-r from-black to-50%">
       <img
         src={IMG_CDN_URL + moviePoster}
         alt=""
