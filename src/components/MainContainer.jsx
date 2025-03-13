@@ -7,7 +7,7 @@ const MainContainer = () => {
   const movies = useSelector((store) => store.movie?.popularMovies);
   //*early return
   if (!movies) return;
-  const mainMovie = movies[17];
+  const mainMovie = movies[4];
   const { poster_path, overview } = mainMovie;
 
   console.log(movies);
