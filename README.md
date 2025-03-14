@@ -34,6 +34,8 @@
 - tmdb img cdn url
 - made the browse page amazing with tailwind css
 - built custom hooks to fetch and store popular,top-rated ,upcoming movies
+- Gpt search page
+- Gpt Search bar
 
 # Features
 

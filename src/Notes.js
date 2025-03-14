@@ -323,3 +323,67 @@ if (isSignIn) {
 */
 //*3.28
 //* so according to the plan we have built the secondary container, and we also buil some custom hooks:-  usePopularMovies();  useTopRatedMovies(),useUpcomingMovies(); to fetch popular, top rated , upcoming movies and we save that data the store and from the store using useSelector we got the data then, passed into movie list components as prop, then from movie list component we passed the data to movieCard component as prop. we also used negative margin to uplift the movie lists component.
+
+//* episode - 16
+//*  NetflixGpt - wrapping up
+//* now we are gonna build our gpt movie searching feature
+//* basically we will build new component, where the user can search movie related info like - best action movies, or horror movies , or any movie related query and using that query we will make a call Open AI's gpt api , and depending on that response from the api , we will fetch some movie data related to the response we got, and then we will display those movie results on our gptSearch component.
+//* for displaying the the gptSearch component, we will add a "gpt search" named button on our header.
+//* onClick of gptSearch button we will display our gptSearch component and hide the mainContainer and the secondaryContainer present in the browse page.
+
+//* for gptSearch feature will create another slice inside our store named   'gptSlice'.
+//* inside the initialState we will create a property named showGptSearch and its initial value is false, because by default we will keep this gptSearch component hidden. and inside the reducer we will add an action name toggleGptSearch() inside this we will toggle the boolean value of the showGptSearch property we have inside the state.
+//* when we will click on the "Gpt Search button" we will dispatch  an action using the action we just built inside the gptSlice named "toggleGptSearch" . and because od the toggle condition we written, the showGptSearch property value will become true. and when it become true we will display the <GptSearch/> component we are gonna create, and when the user will again click on the gptSearch button then because of the toggle condition , showGptSearch property value will become false then we will again display the mainContainer and the Secondary container below the <header/> component inside the browse page.
+//* let's build the gptSearch button in our header , our <GptSearch/> component and the GptSlice with toggleGptSearch action.
+//* using the same showGptSearch property we created in the gptSlice, and importing it using useSelector hook inside the header component we have also built a functionality of changing the "Gpt Search" button text to "Home Page" when the user visits
+//* now inside the GptSearch component , we will have a searchBar component named GptSearchBar it will include the input box where the user will search , so let's build this GptSearchBar component and inside it we also have language change feature, so lets' first composition this GptSearchBar component inside our GptSearch component.
+//* ⁡⁣⁢⁣building the language change feature⁡
+//* we are gonna only build this feature for gptSearch page
+//* first of all inside the constants file we have to add this object to create language options
+/*export const SUPPORTED_LANGUAGES = [
+  { identifier: "en", name: "English" },
+  { identifier: "hi", name: "Hindi" },
+  { identifier: "bn", name: "Bengali" },
+];*/
+//* then create a languageConstants file in our utils and write the below code their here basically we save text for all languages
+/*const lang = {
+  en: {
+    search: "Search",
+    gptSearchPlaceholder: "What would you like to watch today?",
+  },
+  hi: {
+    search: "खोज",
+    gptSearchPlaceholder: "आज आप क्या देखना चाहेंगे?",
+  },
+  bn: {
+    search: "অনুসন্ধান করুন",
+    gptSearchPlaceholder: "আজ তুমি কী দেখতে চাও?",
+  },
+};
+
+export default lang;*/
+//* now we have create to create a configSlice and add that to our appStore. this slice has a action name changeLanguage. this will change the language according to user selected language, we will add the select element in the gptSearchBar page.
+//* in the gptSearchBar bar we have to add the below select element
+/*<select
+        className="p-2 m-2 bg-gray-900  text-white"
+        onChange={handleLanguageChange}
+      >
+        {SUPPORTED_LANGUAGES.map((lang) => (
+          <option key={lang.identifier} value={lang.identifier}>
+            {lang.name}
+          </option>
+        ))}
+      </select>*/
+//* and also the handler function which is dispatching the action and the get the language from the store.
+/*  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+  const langKey = useSelector((store) => store.config.lang); //* for language changing feature      
+*/
+//* also import the lang object we created inside the language constants
+//* then we have to the change the placeholder text using this {lang[langKey].gptSearchPlaceholder} of the input field and also the text of the button using it :{lang[langKey].search}.
+//* now our implementation is completed for the language change feature
+
+//* now we are gonna fetch the data, but as of now open ai's api is not free so we are gonna use gemini free api, so just search for it , got their website, log in , and go to the pai reference page, there you will get the option of generating api key . generate it. then come back to the documentation page
+//* inside the "quick start" option they have told everything about how to use  it.
+//* first we to install it using the command - npm install @google/generative-ai

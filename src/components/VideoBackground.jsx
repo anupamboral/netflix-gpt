@@ -37,7 +37,7 @@ const VideoBackground = ({ movieId }) => {
   return (
     <div>
       <iframe
-        className=" lg:w-[99dvw] w-[100dvw] aspect-video min-h-[30rem] lg:mt-[-80px] mt-[-25px] "
+        className=" w-[100dvw] aspect-video min-h-[30rem] lg:mt-[-80px] mt-[-25px] "
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
