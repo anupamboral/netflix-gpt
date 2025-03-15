@@ -14,7 +14,7 @@ const SecondaryContainer = () => {
 
   //*early return
   if (!movies.nowPlayingMovies) return;
-  console.log(movies);
+  // console.log(movies);
   return (
     <div className=" bg-black pb-10">
       <div className="relative lg:-mt-45 -mt-12 lg:bg-transparent bg-black">

@@ -1,7 +1,7 @@
 import MovieCard from "./MovieCard";
 
 const MoviesList = ({ title, movies }) => {
-  console.log(title, movies);
+  // console.log(title, movies);
   return (
     <div className=" mb-10">
       <div className=" ">

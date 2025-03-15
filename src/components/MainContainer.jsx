@@ -10,7 +10,7 @@ const MainContainer = () => {
   const mainMovie = movies[4];
   const { poster_path, overview } = mainMovie;
 
-  console.log(movies);
+  // console.log(movies);
   return (
     <div>
       <VideoTitle moviePoster={poster_path} movieDetails={overview} />

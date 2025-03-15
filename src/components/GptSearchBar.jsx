@@ -1,8 +1,9 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLanguage } from "../utils/configSlice";
 import lang from "../utils/languageConstants";
+import { model } from "../utils/geminiApi";
+import { useRef } from "react";
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const handleLanguageChange = (e) => {
@@ -11,19 +12,18 @@ const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang); //* for language changing feature
 
   //////
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  console.log(apiKey);
+  const searchText = useRef(null);
+  const handleGptSearch = async () => {
+    //* we have created gemini api helper file, where we kept the the first two lines so genAI and model, their so these two lines are basically initializing the gemini api. and from their we will imported the model as it is needed to make the call.
 
-  const getResponse = async () => {
-    const genAI = new GoogleGenerativeAI(apiKey);
-
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-    const prompt = "best action movies in json format";
+    const prompt =
+      "act as a movie recommendation system and suggest some movies for the query:" +
+      searchText.current.value +
+      ". Give me names of 20 movies comma separated .like this example given ahead :  Gadar ,Sholay,Koi Mil Gaya,Sanam Re,Aashiqui 2.No unnecessary spaces, and unnecessary text rather than the movie names.";
     const result = await model.generateContent(prompt);
     console.log(result.response.text());
   };
-  getResponse();
+
   //////
 
   //* early return
@@ -41,13 +41,23 @@ const GptSearchBar = () => {
           </option>
         ))}
       </select>
-      <form className="bg-black p-2 grid grid-cols-12 lg:w-1/2 w-11/12">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleGptSearch();
+        }}
+        className="bg-black p-2 grid grid-cols-12 lg:w-1/2 w-11/12"
+      >
         <input
+          ref={searchText}
           type="text"
           placeholder={lang[langKey].gptSearchPlaceholder}
           className="p-2 m-2 bg-white col-span-9 rounded-xl"
         />
-        <button className="col-span-3 bg-red-500 m-2 rounded-xl hover:bg-red-900 text-white">
+        <button
+          type="submit"
+          className="col-span-3 bg-red-500 m-2 rounded-xl hover:bg-red-900 text-white"
+        >
           {lang[langKey].search}
         </button>
       </form>

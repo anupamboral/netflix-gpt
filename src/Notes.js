@@ -383,7 +383,49 @@ export default lang;*/
 //* also import the lang object we created inside the language constants
 //* then we have to the change the placeholder text using this {lang[langKey].gptSearchPlaceholder} of the input field and also the text of the button using it :{lang[langKey].search}.
 //* now our implementation is completed for the language change feature
-
+//*
 //* now we are gonna fetch the data, but as of now open ai's api is not free so we are gonna use gemini free api, so just search for it , got their website, log in , and go to the pai reference page, there you will get the option of generating api key . generate it. then come back to the documentation page
 //* inside the "quick start" option they have told everything about how to use  it.
 //* first we to install it using the command - npm install @google/generative-ai
+
+//* let's hide our API Keys  to keep it safe.
+//* So the process is written here :- https://www.smashingmagazine.com/2023/05/safest-way-hide-api-keys-react/
+//* first we have to install this dotenv package using this command - npm install dotenv --save
+//* then Outside of the src folder in your project root directory, create a new file called .env.
+//*In your .env file, add the API key and its corresponding value in the following format:
+// for CRA applications
+//*REACT_APP_API_KEY = A1234567890B0987654321C
+
+// for Vite applications
+//*VITE_SOME_KEY = 12345GATGAT34562CDRSCEEG3T
+//* add the .env to the .gitignore file before moving forward to staging your commits and pushing your code to GitHub.
+//* like this
+//*  # api keys
+//* .env
+// You can now use the env object to access your environment variables in your React application.
+// for CRA applications
+// 'Gemini_Key':process.env.REACT_APP_API_KEY
+//  for Vite  applications
+// 'Gemini_Key':import.meta.env.VITE_SOME_KEY
+//* remember it is important to keep the .env file on the root level.
+
+//* ⁡⁣⁢⁣handling the api call to the gemini api.⁡
+//* To get efficient results, so  if you go to gemini and you write something like this "funny Indian retro movies" you just write this. so it will give you random responses, but I just want the name of the movies, thats all and I want , in a specific format in comma separated way. So I have to give this a little more context/information,so how will I give it how will I give?
+//*what I will do is in this prompt, I will not just pass this value "funny Indian retro movies" but I will pass it something like this ,so inside the constant prompt,  lets form query/prompt providing more specific information so we can get more specific results. here inside the prompt constant I will write my query as "act as a movie recommendation system and suggest some movies for the query: "searchText.current.value". Give me names of five movies comma separated .like this example given ahead :  Gadar ,Sholay,Koi Mil Gaya,Sanam Re,Aashiqui 2."
+//* now using this prompt , we will call the gemini api to give us results.
+//* now to call the api , in their documentation quick start guide, they have given this boiler plate code
+/*const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI("YOUR_API_KEY");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const prompt = "Explain how AI works";
+
+const result = await model.generateContent(prompt);
+console.log(result.response.text());*/
+//* we will create a gemini api helper file, where we will keep the the first two lines so genAI and model, their so these two lines are basically initializing the gemini api. and from their we will export the model, as we just need the model to to call the api. so let's create our gemini api file inside the utils folder.
+//* now where ever we want we can import the model and using the prompt we can get movies from the api. So inside the GptSearchBar component let's try to get results.
+//* it is working ,we got the response.
+//* now to get the query from the user and use that inside the prompt, we will create a reference variable using useRef hook, and reference wharevr the user is typing inside the input box, named "searchText". then use this searchText.current.value inside our prompt constant.
+//* and we have to also create a handleGptSearch function where we will fetch the data from the gemini api.
+//* using onSubmit event on the form we will call this handler function to get data, and we are using the onSubmit event on the form because either the user clicks on search button or click enter on his keyboard both will trigger the event. so now let;s check if it is working.
