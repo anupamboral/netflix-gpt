@@ -15,7 +15,7 @@ const VideoBackground = ({ movieId }) => {
       API_OPTIONS
     );
     const json = await data.json();
-    // console.log(json);
+    console.log(json);
     dispatch(addMovieTrailers(json.results));
   };
   useEffect(() => {

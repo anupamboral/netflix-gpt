@@ -10,6 +10,7 @@ import { toggleGptSearch } from "../utils/gptSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const gptSearchShow = useSelector((store) => store.gptSearch.showGptSearch); //* for toggling the gptSearch button text to "Home Page" when the user opens the gptSearch component by clicking.
+
   const handleGptSearch = () => {
     dispatch(toggleGptSearch());
   };
@@ -33,6 +34,9 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
+
+        //* if showMovieDetails is true then only display the /movieDetails page
+
         navigate("/browse"); //* do confirm validation first then only redirecting to /browse page.
       } else {
         //* this else block gets executed when the user signs out
