@@ -9,13 +9,17 @@ const MainContainer = () => {
   //*early return to display shimmer ui when data is not present
   if (!movies) return <ShimmerUi />;
 
-  const mainMovie = movies[4];
+  const mainMovie = movies[2];
   const { poster_path, overview } = mainMovie;
 
   // console.log(movies);
   return (
     <div>
-      <VideoTitle moviePoster={poster_path} movieDetails={overview} />
+      <VideoTitle
+        moviePoster={poster_path}
+        movieDetails={overview}
+        movie={mainMovie}
+      />
       <VideoBackground movieId={mainMovie.id} />
     </div>
   );

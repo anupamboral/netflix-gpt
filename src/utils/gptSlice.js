@@ -7,8 +7,8 @@ const gptSlice = createSlice({
     movieSuggestions: [],
   },
   reducers: {
-    toggleGptSearch: (state) => {
-      state.showGptSearch = !state.showGptSearch; //*toggle onClick of gptSearch button present in the heeder to display the <GptSearch/> component in the browse page.
+    toggleGptSearch: (state, action) => {
+      state.showGptSearch = action.payload
     },
     addMovieSuggestions: (state, action) => {
       state.movieSuggestions = action.payload;

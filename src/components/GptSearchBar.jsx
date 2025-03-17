@@ -34,6 +34,9 @@ const GptSearchBar = () => {
       ". Give me names of 10 movies comma separated .like this example given ahead :  Gadar ,Sholay,Koi Mil Gaya,Sanam Re,Aashiqui 2.No unnecessary spaces, and unnecessary text rather than the movie names.";
     const result = await model.generateContent(prompt);
     const gtpResultArray = result.response.text().split(","); //* split method will convert the string into an array after split it from the commas.
+
+    console.log(gtpResultArray);
+
     const promiseArray = gtpResultArray.map((movie) => searchTmdbMovie(movie));
     const tmdbResults = await Promise.all(promiseArray);
     console.log(tmdbResults);

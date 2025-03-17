@@ -6,13 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO, USER_AVATAR } from "../utils/constants";
 import { toggleGptSearch } from "../utils/gptSlice";
+import { toggleMovieDetails, toggleMovieTrailer } from "../utils/movieSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const gptSearchShow = useSelector((store) => store.gptSearch.showGptSearch); //* for toggling the gptSearch button text to "Home Page" when the user opens the gptSearch component by clicking.
 
   const handleGptSearch = () => {
-    dispatch(toggleGptSearch());
+    dispatch(toggleGptSearch(!gptSearchShow)); //*for toggle gpt search component
+    //* when we visit the gpt search page from the movieDetails page we have to set showMovieDetails to false using toggleMovieDetails to display  gptSearch page because of the condition we written in the browse page , which says only display the gpt search page when showMovieDetails is false.and also using the toggleMovieTrailer action we are setting showMovieTrailer value to false so when ever we go from the movieDetails to gptSearchPage then to remove the movieTrailerVideo from the movieDetails page if it was present on the page.
+    dispatch(toggleMovieDetails(false));
+    dispatch(toggleMovieTrailer(false));
   };
   const [showSignOut, setShowSignOut] = useState(false);
   const navigate = useNavigate();

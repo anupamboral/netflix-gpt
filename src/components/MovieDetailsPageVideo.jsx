@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
 import { addMovieTrailers } from "../utils/movieSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { API_OPTIONS } from "../utils/constants";
 
-const VideoBackground = ({ movieId }) => {
+const MovieDetailsPageVideo = ({ movieId }) => {
   const dispatch = useDispatch();
   const movieVideos = useSelector((store) => store.movie?.movieTrailer);
 
@@ -37,17 +37,19 @@ const VideoBackground = ({ movieId }) => {
   return (
     <div>
       <iframe
-        className=" w-[100dvw] aspect-video min-h-[30rem] lg:mt-[-105px] mt-[-25px] "
+        className="  lg:w-[32rem] w-[90dvw] h-[60dvh]   lg:h-[70dvh]    m-4 mt-10"
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
           "?autoplay=1&mute=1&loop=1&playlist=" +
           movieTrailer?.key
         }
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         title="YouTube video player"
+        allowFullScreen
       ></iframe>
     </div>
   );
 };
 
-export default VideoBackground;
+export default MovieDetailsPageVideo;
