@@ -14,7 +14,7 @@ const Error = () => {
         />
         <div className="absolute text-white lg:ml-30 ml-6 lg:text-4xl  text-2xl top-20 ">
           <p>Error: {error.message}</p>
-          <Link to="" reloadDocument>
+          <Link to="/" reloadDocument>
             <button className="bg-gradient-to-r mt-4 from-cyan-600 to-fuchsia-700 p-2 rounded-lg border-2 border-double border-white">
               Reload
             </button>
