@@ -9,7 +9,7 @@ const GptSearch = () => {
         <img
           src={LOG_IN_PAGE_BACKGROUND_IMAGE}
           alt="background-image"
-          className=" h-[100dvh] w-[100dvw] absolute -z-10"
+          className=" h-[100dvh] w-[100dvw] fixed -z-10"
         />
       </div>
       <GptSearchBar />

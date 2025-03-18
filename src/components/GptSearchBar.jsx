@@ -4,7 +4,7 @@ import { changeLanguage } from "../utils/configSlice";
 import lang from "../utils/languageConstants";
 import { model } from "../utils/geminiApi";
 import { useRef } from "react";
-import { addMovieSuggestions } from "../utils/gptSlice";
+import { addMovieQuery, addMovieSuggestions } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,8 @@ const GptSearchBar = () => {
   };
 
   //////
-  const searchText = useRef(null);
+  const searchText = useRef(null); //* to keep track what the user is typing in the input box.
+
   const handleGptSearch = async () => {
     //* we have created gemini api helper file, where we kept the the first two lines so genAI and model, their so these two lines are basically initializing the gemini api. and from their we will imported the model as it is needed to make the call.
 
@@ -40,6 +41,7 @@ const GptSearchBar = () => {
     const promiseArray = gtpResultArray.map((movie) => searchTmdbMovie(movie));
     const tmdbResults = await Promise.all(promiseArray);
     console.log(tmdbResults);
+    dispatch(addMovieQuery(searchText.current.value));
     dispatch(addMovieSuggestions(tmdbResults));
   };
 

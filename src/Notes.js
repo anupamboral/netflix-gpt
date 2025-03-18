@@ -426,6 +426,21 @@ console.log(result.response.text());*/
 //* we will create a gemini api helper file, where we will keep the the first two lines so genAI and model, their so these two lines are basically initializing the gemini api. and from their we will export the model, as we just need the model to to call the api. so let's create our gemini api file inside the utils folder.
 //* now where ever we want we can import the model and using the prompt we can get movies from the api. So inside the GptSearchBar component let's try to get results.
 //* it is working ,we got the response.
-//* now to get the query from the user and use that inside the prompt, we will create a reference variable using useRef hook, and reference wharevr the user is typing inside the input box, named "searchText". then use this searchText.current.value inside our prompt constant.
-//* and we have to also create a handleGptSearch function where we will fetch the data from the gemini api.
-//* using onSubmit event on the form we will call this handler function to get data, and we are using the onSubmit event on the form because either the user clicks on search button or click enter on his keyboard both will trigger the event. so now let;s check if it is working.
+//* now to get the query from the user and use that inside the prompt, we will create a reference variable using useRef hook , named "searchText", and reference whatever the user is typing inside the input box. then use this searchText.current.value inside our prompt constant.
+//* and we have created a handleGptSearch function where we will fetch the data from the gemini api.
+//* using onSubmit event on the form we will call this handlerGptSearch function to get data, and we are using the onSubmit event on the form because either the user clicks on search button or click enter on his keyboard both will trigger the event. so now let's check if it is working.
+
+//* as we have intentionally written the prompt constant inside the handler function to get the results of movie list in a comma separated way. but we got the data as a string and now we converted the sting into an array using the split(",") method which is split the data using the commas and converting it to an array of movies. and we name the array gptResultArray.
+//* now as we got the data in a array format which contains all pf the movies. now we we have to make a function which will fetch the movies data which will fetch the movies data from tmdb api
+
+//*⁡⁣⁢⁣fetching the movies data from tmdb api⁡
+//* so outside of this handleGptSearch function we will create another function named searchTmdbMovie , as it will fetch the data so it will be an async function, so let's fetch the data , so this function will receive the movie name as a parameter, so we will pass the movie name as argument while calling this function, and using this movie parameter we will fetch data from tmdb and return the result. soour function is ready fro fetching data from tmdb.
+
+//* this function takes only one movie and fetch data or that one movie, but we have many movies inside the the array we got gpt response. So we will loop the array using map method and call this searchTmdbMovie function for every movie , and save that response inside a constant named tmdbresults.
+//* ⁡⁣⁢⁣use of Promise.all()⁡
+//* but if we print this tmdbResults, then we will see in the console that we got an array of promises, and that is because searchTmdbMovie is an async function, and it takes some time to get the response and return, but before getting the response when react is trying to render it , that's why we are getting array of pending Promises. that why to get result from this Promises array, we will use await Promises.all(), it takes array of promises and only returns when all of the promises get resolved.
+//* and we will save this in a constant named tmdbResults.
+//* now inside the gptSlice we will , add two actions one is for storing this movies data we have inside tmdbResults and this actions name will be addMovieSuggestions, it will save the data in movieSuggestions property inside state, so we will take the data from here and display it on the gptSuggestions component we are gonna create. and also the second action named "addMovieQuery" this will save the userQuery inside movieQuery property present in state. We will use it to display the what the user searched in the GptSuggestion component.
+
+//* now let's build gptSuggestion component, first we will create this component inside our components folder
+/////////
