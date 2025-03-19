@@ -12,7 +12,7 @@ const MovieDetails = () => {
   if (!movieDetails) return; //* early return
   console.log(movieDetails);
   return (
-    <div className={" lg:h-[100dvh] h-[300dvh] bg-black"}>
+    <div className={"lg:h-[54rem]  h-[150rem]    bg-black"}>
       <Header />
 
       <div className="  p-2  pt-24 lg:pl-12 pl-6 lg:flex">
@@ -51,7 +51,7 @@ const MovieDetails = () => {
             Go Back to Home Page
           </button>
         </div>
-        <div className="absolute w-[36rem] left-0 lg:top-24 top-24 z-20 lg:ml-10 ml-2">
+        <div className="absolute lg:w-[36rem] w-82 overflow-x-hidden left-0 lg:top-24 top-24 z-20 lg:ml-10 ml-2">
           {showMovieTrailer && (
             <MovieDetailsPageVideo movieId={movieDetails.id} />
           )}

@@ -37,7 +37,7 @@ const MovieDetailsPageVideo = ({ movieId }) => {
   return (
     <div>
       <iframe
-        className="  lg:w-[32rem] w-[90dvw] h-[60dvh]   lg:h-[70dvh]    m-4 mt-10"
+        className="  lg:w-[32rem] w-[90dvw] h-[60dvh] overflow-x-hidden   lg:h-[70dvh]    m-4 mt-10"
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
