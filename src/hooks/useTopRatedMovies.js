@@ -1,9 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
 import { addTopRatedMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 //* custom hook we built to fetch now playing movies and storing it in the redux store(movie slice)
 const useTopRatedMovies = () => {
+  //* for memoization to prevent making unnecessary api calls when data is already present
+  const topRatedMovies = useSelector((store) => store.movie.topRatedMovies);
   const dispatch = useDispatch();
   const getTopRatedMovies = async () => {
     const data = await fetch(
@@ -15,7 +17,7 @@ const useTopRatedMovies = () => {
     dispatch(addTopRatedMovies(json.results));
   };
   useEffect(() => {
-    getTopRatedMovies();
+    topRatedMovies === null && getTopRatedMovies(); //*using memoization
   }, []);
 };
 

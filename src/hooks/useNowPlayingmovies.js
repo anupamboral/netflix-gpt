@@ -1,9 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
 import { addNowPlayingMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 //* custom hook we built to fetch now playing movies and storing it in the redux store(movie slice)
 const useNowPlayingMovies = () => {
+  //* for memoization to prevent making unnecessary api calls when data is already present
+  const nowPlayingMovies = useSelector((store) => store.movie.nowPlayingMovies);
   const dispatch = useDispatch();
   const getNowPlayingMovies = async () => {
     const data = await fetch(
@@ -15,7 +17,7 @@ const useNowPlayingMovies = () => {
     dispatch(addNowPlayingMovies(json.results));
   };
   useEffect(() => {
-    getNowPlayingMovies();
+    nowPlayingMovies === null && getNowPlayingMovies(); //*using memoization
   }, []);
 };
 

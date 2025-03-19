@@ -51,7 +51,7 @@ const MovieDetails = () => {
             Go Back to Home Page
           </button>
         </div>
-        <div className="absolute lg:w-[36rem] w-82 overflow-x-hidden left-0 lg:top-24 top-24 z-20 lg:ml-10 ml-2">
+        <div className="absolute lg:w-[36rem] w-[95dvw] overflow-x-hidden left-0 lg:top-24 top-24 z-20 lg:ml-10 ml-2">
           {showMovieTrailer && (
             <MovieDetailsPageVideo movieId={movieDetails.id} />
           )}
