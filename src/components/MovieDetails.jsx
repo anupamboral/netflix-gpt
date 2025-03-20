@@ -44,7 +44,7 @@ const MovieDetails = () => {
           <button
             className="  absolute z-50 top-18 border-2 border-cyan-600 text-sm p-2 m-2 rounded-lg bg-gradient-to-r from-purple-700 via-cyan-500 to-indigo-400 inline-block text-transparent bg-clip-text font-semibold whitespace-nowrap left-2"
             onClick={() =>
-              dispatch(toggleMovieDetails()) &&
+              dispatch(toggleMovieDetails(false)) &&
               dispatch(toggleMovieTrailer(false))
             }
           >

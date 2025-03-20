@@ -443,6 +443,55 @@ console.log(result.response.text());*/
 //* now inside the gptSlice we will , add two actions one is for storing this movies data we have inside tmdbResults and this actions name will be addMovieSuggestions, it will save the data in movieSuggestions property inside state, so we will take the data from here and display it on the gptSuggestions component we are gonna create. and also the second action named "addMovieQuery" this will save the userQuery inside movieQuery property present in state. We will use it to display the what the user searched in the GptSuggestion component.
 
 //* now let's build gptSuggestion component, first we will create this component inside our components folder
+//* here in this component we will get the data from the store using useSelector hook , so lets first get the movieSuggestions and the movieQuery form the store and now we will use this data. so using the the movieQuery we will display a header so basically what the user had searched.
+//* in the movieSuggestions , we have have an array which conatains multiple arrays , and each array contains multiple movie objects, so we will loop this using map and for each movies Array wei will render an MovieList component which we have already used in secondary component, and that is the advantage of making reusable components.
+//* now our GptSuggestion component is complete.
+
+//* now in the MovieList component we have multiple MovieCard components, and we rae displaying this MovieList inside the secondary component and also in the GptSuggestion page.
+
+//* Building MovieDetails component
+//* now we want that when the user click on any of these MovieCard then a MovieDetails component should be displayed which will display the details about  any movie.
+//* so onclick of this movieCard we want to display the MovieDetails component, so first of all we will create two action first addMovieDetails action, it will add all the movie details to the store onClick of this movieCard and second is toggleMovieDetails , it will be a boolean value changing action , which will help us to display the MovieDetails Component. Now after creating these two, we also need another action which is already built inside our gptSlice  named toggleGptSearch. onClick of this MovieCard , we will first do dispatch(addMovieDetails(movie)) to add the movieDetails to the store and then dispatch(toggleMovieDetails(true)) to display MovieDetails component and dispatch(toggleGptSearch(false)) to hide the GptSearch component if it is opened.
+//* and the toggleMovieDetails(true) action the value of showMovieDetails property becomes true and because of toggleGptSearch(false) the value of showGptSearch property becomes false. and now using these two properties we will display the MovieDetails page .
+//* So now we have to go to our browse page, and we had already imported the showGptSearch property imported here previously and now we have get the showMovieDetails property using useSelector hook from the movieSlice.
+//* now we will write a condition that when showMovieDetails property value is true and showGptSlice value is false then only display the MovieDetails component, other display GptSearch component when when showGptSearch is true and when showGptSearch is false then display mainContainer and Secondary container.
+/* ⁡⁣⁢⁣<div>
+      <Header />
+      {showMovieDetails && !gptSearchShow ? (
+        <MovieDetails />
+      ) : (
+        <>
+          {gptSearchShow ? (
+            <GptSearch />
+          ) : (
+            <>
+              <MainContainer />
+              <SecondaryContainer />
+            </>
+          )}
+        </>
+      )}
+    </div>⁡ */
+
+//* now in the movieDetails component we also need a button to go back to the home page, so we created it and onClick of this button we will dispatch two actions first dispatch(toggleMovieDetails(false)) to display the home page && second  dispatch(toggleMovieTrailer(false)) this for a display and hiding movieTrailer feature which we are gonna build now.
+//* ⁡⁣⁢⁣building MovieTrailer Feature⁡
+//* in the MovieDetails component we will add a button named trailer and on click of this button we want to display a Movie Trailer Video inside our MovieDetails page , so let's build a component for this, named MovieDetailsPageVideo , this component is basically very similar to our VideoBackground component but its size and positioning is bit different.
+//* Now onClick of trailer button we want to display the MovieDetailsPageVideo component, to do that we will create another boolean value changing action named toggleMovieTrailer action inside movieSlice and this will change the value of this boolean property showMovieTrailer. So click of the Trailer button we will dispatch an action
+//*for toggle the previous boolean value
+//*dispatch(toggleMovieTrailer(!showMovieTrailer));
+//* and also get the showMovieTrailer property inside movieDetails component fro displaying the MovieTrailer component.
+//* So when we click on trailer button this showTrailerVideo property value become true then we will display the MovieDetailsPageVideo component and when user and clicks on the button then this MovieDetailsPageVideo component gets hidden , we will write this condition like this
+/* ⁡⁣⁢⁣{showMovieTrailer && (
+            <MovieDetailsPageVideo movieId={movieDetails.id} />
+          )}⁡*/
+//* this MovieDetailsPageVideo component will basically overlap on the Movie image.
+//* now when the is on the movieDetails page and and the he clicks on the GptSearch btn on header then also we have to do     dispatch(toggleMovieDetails(false))  , to set showMovieDetails property value false only the gptSearch component can be displayed because of the condition we written on the browse page. and dispatch(toggleMovieTrailer(false)); so if the movieTrailer was playing and then user visits to gptSearch component then we can again set showMovieTrailer property value to false.
+
+//* ⁡⁣⁢⁣More info Button in mainContainer work⁡
+//* onClick of this button we want to also show the movieDetails page so first  to do dispatch(addMovieDetails(movie)) to adding movie Details to store and dispatch(toggleMovieDetails(true)) to display movie details component and dispatch(toggleGptSearch(false)) to ensure hiding gptSearch component
+
+//* ⁡⁣⁢⁣Play Button in mainContainer work⁡
+//* to make this button work we have to dispatch the same actions we mention above for more info button ,and one more extra option and we that is dispatch(toggleMovieTrailer(true)) to start the trailer video immediately when the movieDetails component comes into view after clicking this button.
 /////////
 //* ⁡⁣⁢⁣Memoization⁡
 //*Memoization is a programming technique used to optimize the performance of functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This technique is particularly useful in scenarios where the same computation is repeated with identical inputs, as it helps avoid redundant calculations and improves overall execution speed.

@@ -36,6 +36,13 @@
 - built custom hooks to fetch and store popular,top-rated ,upcoming movies
 - Gpt search page
 - Gpt Search bar
+- multi language feature for gpt SearchBar
+- get gemini api key
+- gpt search api call
+- fetched movies from tmdb
+- building MovieDetails page
+- displaying MovieTrailer on MovieDetails page using trailer btn
+- memoization
 
 # Features
 
