@@ -492,6 +492,9 @@ console.log(result.response.text());*/
 
 //* ⁡⁣⁢⁣Play Button in mainContainer work⁡
 //* to make this button work we have to dispatch the same actions we mention above for more info button ,and one more extra option and we that is dispatch(toggleMovieTrailer(true)) to start the trailer video immediately when the movieDetails component comes into view after clicking this button.
+
+//* ⁡⁣⁢⁣useTmdbSearch hook⁡
+//* previously we were using nowPlayingMovies to display any movie on the VideoBackGround, and because of this we could not display our favorite movie , and every day nowPlaying movies change so there is a possibility that some movies has no background video which can make our background video empty, that why we developed this hook , this will take a movie name and return us data about that particular movie, so now we can pass any movie name from main container and display that particular movie's video playing in videoBackground component.
 /////////
 //* ⁡⁣⁢⁣Memoization⁡
 //*Memoization is a programming technique used to optimize the performance of functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This technique is particularly useful in scenarios where the same computation is repeated with identical inputs, as it helps avoid redundant calculations and improves overall execution speed.
