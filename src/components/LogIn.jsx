@@ -106,9 +106,9 @@ const LogIn = () => {
       <div>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col p-12 lg:w-[500px]  w-80 h-[400px]  lg:h-[600px] mb-0   absolute  lg:left-[500px] left-10  md:left-1/3 top-24     bg-black opacity-80"
+          className="flex flex-col p-12 lg:w-[500px]  w-80 h-[600px]  lg:h-[600px] mb-0   absolute  lg:left-[500px] left-10  md:left-1/3 top-24     bg-black opacity-80"
         >
-          <h1 className="text-white text-4xl font-bold mb-2 ml-2">
+          <h1 className=" text-4xl  mb-2 ml-2 bg-gradient-to-r from-purple-700 via-cyan-500 to-indigo-400 inline-block text-transparent bg-clip-text font-bold">
             {isSignIn ? "Sign In" : "Sign up"}
           </h1>
 
@@ -122,13 +122,13 @@ const LogIn = () => {
           )}
           <input
             ref={email}
-            className="bg-black text-amber-50 text-lg p-4 m-2 border-2 mb-4 rounded-md hover:border-b-cyan-400"
+            className="bg-black text-amber-50 text-lg p-4 m-2 border-2 mb-4 rounded-xl border-cyan-400 "
             type="email"
             placeholder="Email address"
           />
           <input
             ref={password}
-            className="bg-black text-amber-50 p-4 text-lg m-2  border-2 rounded-md  hover:border-b-cyan-400 "
+            className="bg-black text-amber-50 p-4 text-lg m-2  border-2 rounded-md  border-cyan-400 "
             type={togglePassword ? "password" : "text"}
             placeholder="password"
           />
@@ -148,19 +148,19 @@ const LogIn = () => {
           <button
             onClick={handleForm}
             type="submit"
-            className="bg-red-600 text-white p-3 text-sm m-2 mt-4 rounded-sm"
+            className="border-2 mr-0 bg-red-500  rounded-xl hover:bg-red-900  border-cyan-600 hover:border-fuchsia-600 hover:shadow-2xl shadow-fuchsia-600 bg-gradient-to-r from-purple-700 via-purple-700 to-indigo-400 inline-block text-transparent bg-clip-text font-bold lg:text-2xl text-lg  hover:bg-gradient-to-r hover:from-pink-500 hover:via-cyan-500 hover:to-amber-300 p-3  m-2 mt-4 "
           >
             {isSignIn ? "Sign In" : "Sign up"}
           </button>
 
-          <p
+          <button
             onClick={() => setIsSignIn(!isSignIn)}
-            className="text-white mx-auto text-sm underline cursor-pointer hover:text-blue-600"
+            className=" mx-auto border-2 text-xs mt-4 underline cursor-pointer bg-gradient-to-r from-purple-700 via-cyan-500 to-indigo-400 inline-block text-transparent bg-clip-text font-bold border-cyan-600 hover:border-fuchsia-600 p-2 rounded-xl"
           >
             {isSignIn
               ? " New to Netflix? Sign Up now"
               : "Already a user? Sign In now"}
-          </p>
+          </button>
         </form>
       </div>
     </div>
