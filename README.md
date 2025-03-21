@@ -1,5 +1,23 @@
 # Netflix Gpt
 
+[Live Link](https://n-etflixgpt-anupam.netlify.app/).
+
+## Details
+
+🔮 What I Built:-
+✅ AI-powered movie recommendations functionality "GPT Search" built using Google gemini-2.0-flash API.
+✅ Dynamic movie data fetching from TMDB API .
+✅ View latest, now-playing, top-rated , popular, upcoming movies on the browse page.
+✅ Know the details about any movie like overview and released date in the details page.
+✅ You can select among three language options(Hindi , English , Bengali) in the GPT Search section.
+✅ Watch the trailer of any movie on the movie details section directly embed to YouTube.
+✅ Secure authentication powered by Firebase authentication (Email-based)
+✅ Optimized state management using Redux
+✅ Memorization to reduce unnecessary API calls
+✅ Fully responsive, smooth ,user-friendly UI built leveraging the power of Tailwind CSS.
+
+## Journey of building this project
+
 - built using react + vite(bundler)
 - styled using Tailwind CSS
 - setting up routing
@@ -37,7 +55,7 @@
 - Gpt search page
 - Gpt Search bar
 - multi language feature for gpt SearchBar
-- get gemini api key
+- get Gemini api key
 - gpt search api call
 - fetched movies from tmdb
 - building MovieDetails page
@@ -58,6 +76,6 @@
   - Movie Suggestions component
     - movies list in row format
 
-- NetflixGPT
+- GPT Search
   - Search Bar
   - Movie suggestions
